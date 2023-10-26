@@ -1,4 +1,4 @@
-# Stock ticket web app
+# Stock Chart web app
 
 * `python -m pip install -r requirements.txt`
 * `python -m flash --app stock_chart_app run`
