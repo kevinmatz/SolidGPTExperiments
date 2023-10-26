@@ -12,15 +12,15 @@ def index():
 @app.route('/stock', methods=['POST'])
 def stock():
    ticker = request.form['ticker']
-   start_date = datetime(datetime.now().year, 1, 1)
    end_date = datetime.now()
+   start_date = datetime(end_date.year - 1, end_date.month, end_date.day)
    data = yf.download(ticker, start=start_date, end=end_date)
-   data['Return'] = (1 + data['Close'].pct_change()).cumprod()
+   # data['Return'] = (1 + data['Close'].pct_change()).cumprod()
    plt.figure(figsize=(14, 7))
-   plt.plot(data['Return'], 'r', label=ticker)
-   plt.title('Stock Price Change YTD')
+   plt.plot(data['Close'], 'r', label=ticker)
+   plt.title(f'Stock Price Movement During the Last Year for Ticker Symbol {ticker}')
    plt.xlabel('Date')
-   plt.ylabel('Cumulative Return')
+   plt.ylabel('Stock Price')
    plt.legend()
    plt.grid(True)
    plt.savefig('static/stock_graph.png')  # Save the graph as a static file
